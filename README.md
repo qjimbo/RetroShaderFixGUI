@@ -6,7 +6,7 @@ Download on the releases page: https://github.com/qjimbo/RetroShaderFixGUI/relea
 
 RetroShaderFix - https://github.com/EthanRDoesMC/RetroShaderFix
 
-RetroShaderFix attempts to solves graphical issues with legacy versions of No Man's Sky and current graphics cards and drivers.
+RetroShaderFix attempts to solve graphical issues with legacy versions of No Man's Sky and current graphics cards and drivers.
 
 Versions supported: Release, Foundation, Path Finder, Atlas Rises.
 
