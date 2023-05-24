@@ -68,6 +68,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectVersionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectVersionForm.Designer.cs">
+      <DependentUpon>SelectVersionForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,6 +94,9 @@
     <EmbeddedResource Include="PAKs\Pathfinder.NVIDIAFragData.pak" />
     <EmbeddedResource Include="PAKs\Release.AMDFragData.pak" />
     <EmbeddedResource Include="PAKs\Universal.AMDSpaceMapHorizon.pak" />
+    <EmbeddedResource Include="SelectVersionForm.resx">
+      <DependentUpon>SelectVersionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

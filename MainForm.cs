@@ -162,10 +162,10 @@ namespace RetroShaderFixGUI
             if (initial)
             {
                 UpdateLabel("Scan Complete");
-                WriteToLog("Scan Complete");
-                ApplyFixes();
+                WriteToLog("Scan Complete");                
                 this.Invoke((MethodInvoker)delegate()
                 { // Threadsafe
+                    ApplyFixes();
                     btnStart.Enabled = true;
                 });
             }
@@ -182,14 +182,32 @@ namespace RetroShaderFixGUI
         {
             WriteToLog("Applying Fixes");
             foreach (var filePath in ScanResults)
-            {
+            {                
                 var version = NMSVersionDll.Version.GetVersionInfo(filePath);
+                NMSUpdate? update = null;
                 if (version == null)
                 {
                     // Unable to identify
-
+                    var selectVersion = new SelectVersionForm(filePath);
+                    selectVersion.ShowDialog();
+                    if (selectVersion.SelectedVersion != null)
+                    {
+                        update = selectVersion.SelectedVersion.Value;
+                        WriteToLog(filePath + " specified by user is version " + update);
+                    }                    
                 }
-                WriteToLog(filePath + " is " + version.PLATFORM.ToString() + " version " + version.VERSION + " " + version.UPDATE);
+                else
+                {
+                    update = version.UPDATE;
+                    WriteToLog(filePath + " is " + version.PLATFORM.ToString() + " version " + version.VERSION + " " + version.UPDATE);
+                }
+
+                if(update == null)
+                {
+                    WriteToLog(filePath + " skipped");
+                    continue;
+                }
+
                 string gameDataFolderPath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(filePath)), "GAMEDATA\\", "PCBANKS\\");
                 string shaderCachePath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(filePath)), "GAMEDATA\\", "SHADERCACHE\\");
                 string modsFolderPath = Path.Combine(gameDataFolderPath, "MODS\\");
@@ -197,21 +215,27 @@ namespace RetroShaderFixGUI
 
                 bool madeChange = false;
                 // RELEASE
-                if (version.UPDATE == NMSUpdate.Release)
+                if (update == NMSUpdate.Release)
                 {
                     if (GraphicsCardMode == GraphicsCard.AMD)
                     {
                         madeChange = true;
                         // Universal
                         ExtractSingleFileFromPAKs("Universal.AMDSpaceMapHorizon.pak", gameDataFolderPath);
+                        // Release AMDFragData
+                        ExtractSingleFileFromPAKs("Release.AMDFragData.pak", gameDataFolderPath);
                     }
                 }
 
                 // FOUNDATION
-                if (version.UPDATE == NMSUpdate.Foundation)
+                if (update == NMSUpdate.Foundation)
                 {
-                    if (File.Exists(disableModsFile))
-                    {
+                    bool hasModsFolder = false;
+                    if (File.Exists(disableModsFile) || Directory.Exists(modsFolderPath)) // Some foundation versions use mods folder, others don't               
+                        hasModsFolder = true;
+
+                    if(hasModsFolder && File.Exists(disableModsFile))
+                    { 
                         WriteToLog("Deleting DISABLEMODS.TXT (" + disableModsFile + ")");
                         File.Delete(disableModsFile);
                     }
@@ -220,20 +244,20 @@ namespace RetroShaderFixGUI
                     {
                         madeChange = true;
                         // Universal
-                        ExtractSingleFileFromPAKs("Universal.AMDSpaceMapHorizon.pak", modsFolderPath);
+                        ExtractSingleFileFromPAKs("Universal.AMDSpaceMapHorizon.pak", hasModsFolder ? modsFolderPath : gameDataFolderPath);
                         // Texture Array
-                        ExtractSingleFileFromPAKs("Foundations.AMDTextureArray.pak", modsFolderPath);
+                        ExtractSingleFileFromPAKs("Foundations.AMDTextureArray.pak", hasModsFolder ? modsFolderPath : gameDataFolderPath);
                     }
                     if (GraphicsCardMode == GraphicsCard.nVidia)
                     {
                         madeChange = true;
                         // Frag Data
-                        ExtractSingleFileFromPAKs("Foundations.NVIDIAFragData.pak", modsFolderPath);
+                        ExtractSingleFileFromPAKs("Foundations.NVIDIAFragData.pak", hasModsFolder ? modsFolderPath : gameDataFolderPath);
                     }
                 }
 
                 // PATH FINDER
-                if (version.UPDATE == NMSUpdate.PathFinder)
+                if (update == NMSUpdate.PathFinder)
                 {
                     if (File.Exists(disableModsFile))
                     {
@@ -258,7 +282,7 @@ namespace RetroShaderFixGUI
                 }
 
                 // PATH FINDER
-                if (version.UPDATE == NMSUpdate.AtlasRises)
+                if (update == NMSUpdate.AtlasRises)
                 {
                     if (File.Exists(disableModsFile))
                     {
@@ -296,6 +320,8 @@ namespace RetroShaderFixGUI
         {
             WriteToLog("Extracting " + fileName + " to " + outputPath);
 
+            var outputFileName = "zzzzzzzzzzzzz" + fileName;
+
             // Get the assembly that contains the embedded resources.
             Assembly assembly = Assembly.GetExecutingAssembly();
 
@@ -312,7 +338,7 @@ namespace RetroShaderFixGUI
                 }
 
                 // Extract the resource to a file.
-                using (FileStream fileStream = new FileStream(Path.Combine(outputPath, fileName), FileMode.Create))
+                using (FileStream fileStream = new FileStream(Path.Combine(outputPath, outputFileName), FileMode.Create))
                 {
                     resourceStream.CopyTo(fileStream);
                 }
