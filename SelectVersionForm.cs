@@ -19,6 +19,7 @@ namespace RetroShaderFixGUI
         {
             InitializeComponent();
             lblPath.Text = path;
+            pbIcon.Image = SystemIcons.Question.ToBitmap();
         }
 
         private void btnSkip_Click(object sender, EventArgs e)
