@@ -62,41 +62,41 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.Blue;
             this.label1.Location = new System.Drawing.Point(3, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(174, 13);
+            this.label1.Size = new System.Drawing.Size(185, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "RetroShaderFix by EthanRDoesMC";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(404, 12);
+            this.panel1.Location = new System.Drawing.Point(391, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(182, 30);
+            this.panel1.Size = new System.Drawing.Size(195, 30);
             this.panel1.TabIndex = 2;
             // 
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Location = new System.Drawing.Point(430, 48);
+            this.panel2.Location = new System.Drawing.Point(391, 48);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(156, 30);
+            this.panel2.Size = new System.Drawing.Size(195, 30);
             this.panel2.TabIndex = 3;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.Gray;
             this.label2.Location = new System.Drawing.Point(3, 6);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(148, 13);
+            this.label2.Size = new System.Drawing.Size(185, 13);
             this.label2.TabIndex = 0;
-            this.label2.Text = "RetroShaderFixGUI by Qjimbo";
+            this.label2.Text = "RetroShaderFixGUI v1.02 by Qjimbo";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // groupBox1
             // 
@@ -123,20 +123,20 @@
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel3.Controls.Add(this.label4);
-            this.panel3.Location = new System.Drawing.Point(511, 84);
+            this.panel3.Location = new System.Drawing.Point(391, 84);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(75, 30);
+            this.panel3.Size = new System.Drawing.Size(195, 30);
             this.panel3.TabIndex = 4;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.Green;
             this.label4.Location = new System.Drawing.Point(6, 6);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
+            this.label4.Size = new System.Drawing.Size(182, 13);
             this.label4.TabIndex = 0;
-            this.label4.Text = "v1.00 PAKs";
+            this.label4.Text = "v1.00 PAKs [Feb 14 2023]";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtSystemInformation
             // 
@@ -310,13 +310,10 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.panel4.ResumeLayout(false);
